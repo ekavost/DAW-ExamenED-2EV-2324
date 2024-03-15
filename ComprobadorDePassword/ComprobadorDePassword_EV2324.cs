@@ -11,20 +11,21 @@ namespace ComprobadorDePasswordApp
 
     public class ComprobadorDePassword
     {
-        public string _password;
+        private string password;
+        //private bool _lowerCase;
+        //private bool _upperCase;
+        //private bool _numbers;
+        //private bool _length;
 
-        private bool _lowerCase;
-        private bool _upperCase;
-        private bool _numbers;
-        private bool _length;
+        private const int MIN_LENGTH = 6;
+        private const int SAFE_LENGTH = 12;
 
-        /// <summary>
-        /// Constructor que asigna el valor de propiedades
-        /// </summary>
-        public ComprobadorDePassword()
-        {
-            _lowerCase = _upperCase = _numbers = _length = false;
-        }
+        //public ComprobadorDePassword()
+        //{
+        //    _lowerCase = _upperCase = _numbers = _length = false;
+        //}
+
+        public string Password { get => password; set => password = value; }
 
         /// <summary>
         /// <para>Metodo que comprueba si la contraseña es valida </para>
@@ -34,24 +35,28 @@ namespace ComprobadorDePasswordApp
         /// <returns>Un entero de 1 a 4 según el nivel de fortaleza </returns>
         public int TestPassword(string password)
         {
-            _password = password;
+            Password = password;
 
-            if (_password == null || _password.Length <= 0)
+            if (Password == null || Password.Length <= 0)
             {
-                return -1; // Si la contraseña es nula o vacía, devolvemos un código de error
+                return -1; 
             }
 
-
-            if (_password.Length < 6)
+            else if (Password.Length < MIN_LENGTH)
             {
-                return 0; // No tiene la longitud mínima, error
+                return 0; 
             }
 
-            int force = CheckForce();
-
-            return force;
+            else
+            {
+                return CheckForce();
+            }
         }
 
+        /// <summary>
+        /// Método que comprueba el nivel de fortaleza de la contraseña introducida
+        /// </summary>
+        /// <returns>El nivel de fortaleza de la contraseña de 1 (menos fuerte) a 4 (más fuerte)</returns>
         private int CheckForce()
         {
             bool lowerCase = false;
@@ -59,25 +64,23 @@ namespace ComprobadorDePasswordApp
             bool numbers = false;
             bool length = false;
 
-            if (_password.Length > 12) length = true;
+            if (Password.Length > SAFE_LENGTH) length = true;
 
-            // Recorremos la cadena buscando minúsculas, mayúsculas y números
-            //
-            foreach (char c in _password)
+            foreach (char c in Password)
             {
                 if (char.IsLower(c))
                 {
                     lowerCase = true;
                 }
             }
-            foreach (char c in _password)
+            foreach (char c in Password)
             {
                 if (char.IsUpper(c))
                 {
                     upperCase = true;
                 }
             }
-            foreach (char c in _password)
+            foreach (char c in Password)
             {
                 if (char.IsDigit(c))
                 {
@@ -85,11 +88,6 @@ namespace ComprobadorDePasswordApp
                 }
             }
 
-            // Calculamos el nivel de fortaleza
-            // 4: muy fuerte
-            // 3: fuerte
-            // 2: normal
-            // 1: débil
             int force = 0;
             if (lowerCase) force++;
             if (upperCase) force++;
