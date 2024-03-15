@@ -1,4 +1,4 @@
-﻿namespace ComprobadorDePassword
+﻿namespace ComprobadorDePasswordApp
 {
     partial class Form1
     {

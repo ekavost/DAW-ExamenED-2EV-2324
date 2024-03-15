@@ -4,43 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ComprobadrDePassword
+namespace ComprobadorDePasswordApp
 {
     using System;
     using System.Text.RegularExpressions;
 
-    public class comprobadorDePassword
+    public class ComprobadorDePassword
     {
-        //EV2324
         public string _password;
 
-        private bool _minusculas;
-        private bool _mayusculas;
-        private bool _numeros;
-        private bool _longitud;
+        private bool _lowerCase;
+        private bool _upperCase;
+        private bool _numbers;
+        private bool _length;
 
         /// <summary>
         /// Constructor que asigna el valor de propiedades
         /// </summary>
-        public comprobadorDePassword()
+        public ComprobadorDePassword()
         {
-            Minusculas = Mayusculas = Numeros = Longitud = false;
+            _lowerCase = _upperCase = _numbers = _length = false;
         }
-
-        public bool Minusculas { get => _minusculas; set => _minusculas = value; }
-        public bool Mayusculas { get => _mayusculas; set => _mayusculas = value; }
-        public bool Numeros { get => _numeros; set => _numeros = value; }
-        public bool Longitud { get => _longitud; set => _longitud = value; }
 
         /// <summary>
         /// <para>Metodo que comprueba si la contraseña es valida </para>
         /// <para>y define el nivel de su fortaleza</para>>
         /// </summary>
-        /// <param name="contrasenya"> String con el valor de contraseña introducida</param>
+        /// <param name="password"> String con el valor de contraseña introducida</param>
         /// <returns>Un entero de 1 a 4 según el nivel de fortaleza </returns>
-        public int Comprobar(string contrasenya)
+        public int TestPassword(string password)
         {
-            _password = contrasenya;
+            _password = password;
 
             if (_password == null || _password.Length <= 0)
             {
@@ -53,19 +47,19 @@ namespace ComprobadrDePassword
                 return 0; // No tiene la longitud mínima, error
             }
 
-            int fuerte = ComprobarFortaleza();
+            int force = CheckForce();
 
-            return fuerte;
+            return force;
         }
 
-        private int ComprobarFortaleza()
+        private int CheckForce()
         {
-            bool minusculas = false;
-            bool mayusculas = false;
-            bool numeros = false;
-            bool longitud = false;
+            bool lowerCase = false;
+            bool upperCase = false;
+            bool numbers = false;
+            bool length = false;
 
-            if (_password.Length > 12) longitud = true;
+            if (_password.Length > 12) length = true;
 
             // Recorremos la cadena buscando minúsculas, mayúsculas y números
             //
@@ -73,21 +67,21 @@ namespace ComprobadrDePassword
             {
                 if (char.IsLower(c))
                 {
-                    minusculas = true;
+                    lowerCase = true;
                 }
             }
             foreach (char c in _password)
             {
                 if (char.IsUpper(c))
                 {
-                    mayusculas = true;
+                    upperCase = true;
                 }
             }
             foreach (char c in _password)
             {
                 if (char.IsDigit(c))
                 {
-                    numeros = true;
+                    numbers = true;
                 }
             }
 
@@ -96,12 +90,12 @@ namespace ComprobadrDePassword
             // 3: fuerte
             // 2: normal
             // 1: débil
-            int fuerte = 0;
-            if (minusculas) fuerte++;
-            if (mayusculas) fuerte++;
-            if (numeros) fuerte++;
-            if (longitud) fuerte++;
-            return fuerte;
+            int force = 0;
+            if (lowerCase) force++;
+            if (upperCase) force++;
+            if (numbers) force++;
+            if (length) force++;
+            return force;
         }
     }
 }

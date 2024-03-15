@@ -1,4 +1,4 @@
-﻿using ComprobadrDePassword;
+﻿using ComprobadorDePasswordApp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ComprobadorDePassword
+namespace ComprobadorDePasswordApp
 {
     public partial class Form1 : Form
     {
@@ -20,8 +20,8 @@ namespace ComprobadorDePassword
 
         private void btnComprobar_click(object sender, EventArgs e)
         {
-            comprobadorDePassword miComprobador = new comprobadorDePassword();
-            int resultado = miComprobador.Comprobar(txtPassword.Text);
+            ComprobadorDePasswordApp.ComprobadorDePassword miComprobador = new ComprobadorDePasswordApp.ComprobadorDePassword();
+            int resultado = miComprobador.TestPassword(txtPassword.Text);
             if (resultado < 0)
                 MessageBox.Show("La contraseña no puede estar vacía");
             if (resultado == 0)
