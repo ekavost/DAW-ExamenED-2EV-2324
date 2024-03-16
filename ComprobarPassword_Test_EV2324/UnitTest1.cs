@@ -29,8 +29,10 @@ namespace UnitTestProject_EV2324
             }
             catch (Exception error)
             {
-                StringAssert.Contains(error.Message, ComprobadorNull.)
+                StringAssert.Contains(error.Message, ComprobadorDePassword.ERROR_EMPTY_PASSWORD);
+                return;
             }
+            Assert.Fail("Error. Se debía haber producido una exepción.");
     }
 
     [TestMethod]
@@ -40,9 +42,18 @@ namespace UnitTestProject_EV2324
 
     public void TestMethodError2(string password)
     {
-        int resultExpected = 0;
-        ComprobadorDePassword ComprobadorShort = new ComprobadorDePassword();
-        Assert.AreEqual(resultExpected, ComprobadorShort.TestPassword(password));
+            ComprobadorDePassword ComprobadorShort = new ComprobadorDePassword();
+
+            try
+            {
+                ComprobadorShort.TestPassword(password);
+            }
+            catch (Exception error)
+            {
+                StringAssert.Contains(error.Message, ComprobadorDePassword.ERROR_SHORT_PASSWORD);
+                return;
+            }
+            Assert.Fail("Error. Se debía haber producido una exepción.");
     }
 }
 }
