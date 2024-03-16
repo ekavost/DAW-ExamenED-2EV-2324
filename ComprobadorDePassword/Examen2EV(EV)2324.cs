@@ -38,11 +38,11 @@ namespace ComprobadorDePasswordApp
             {
                 if (error.Message.Contains(ComprobadorDePassword.ERROR_EMPTY_PASSWORD))
                 {
-                    MessageBox.Show("La contraseña no puede estar vacía");
+                    MessageBox.Show(ComprobadorDePassword.ERROR_EMPTY_PASSWORD);
                 }
                 else if (error.Message.Contains(ComprobadorDePassword.ERROR_SHORT_PASSWORD))
                 {
-                    MessageBox.Show("Contraseña demasiado corta");
+                    MessageBox.Show(ComprobadorDePassword.ERROR_SHORT_PASSWORD);
                 }
             }
             
