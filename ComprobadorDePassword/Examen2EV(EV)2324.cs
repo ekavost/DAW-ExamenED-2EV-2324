@@ -18,22 +18,34 @@ namespace ComprobadorDePasswordApp
             InitializeComponent();
         }
 
+        ComprobadorDePassword miComprobador = new ComprobadorDePassword();
         private void btnComprobar_click(object sender, EventArgs e)
         {
-            ComprobadorDePasswordApp.ComprobadorDePassword miComprobador = new ComprobadorDePasswordApp.ComprobadorDePassword();
-            int resultado = miComprobador.TestPassword(txtPassword.Text);
-            if (resultado < 0)
-                MessageBox.Show("La contraseña no puede estar vacía");
-            if (resultado == 0)
-                MessageBox.Show("Contraseña demasiado corta");
-            if (resultado == 1)
-                MessageBox.Show("Contraseña débil");
-            if (resultado == 2)
-                MessageBox.Show("Contraseña normal");
-            if (resultado == 3)
-                MessageBox.Show("Contraseña fuerte");
-            if (resultado == 4)
-                MessageBox.Show("Contraseña muy fuerte");
+            try
+            {
+                int resultado = miComprobador.TestPassword(txtPassword.Text);
+
+                if (resultado == 1)
+                    MessageBox.Show("Contraseña débil");
+                else if (resultado == 2)
+                    MessageBox.Show("Contraseña normal");
+                else if (resultado == 3)
+                    MessageBox.Show("Contraseña fuerte");
+                else if (resultado == 4)
+                    MessageBox.Show("Contraseña muy fuerte");
+            }
+            catch (Exception error)
+            {
+                if (error.Message.Contains(ComprobadorDePassword.ERROR_EMPTY_PASSWORD))
+                {
+                    MessageBox.Show("La contraseña no puede estar vacía");
+                }
+                else if (error.Message.Contains(ComprobadorDePassword.ERROR_SHORT_PASSWORD))
+                {
+                    MessageBox.Show("Contraseña demasiado corta");
+                }
+            }
+            
         }
     }
 }

@@ -8,24 +8,36 @@ namespace ComprobadorDePasswordApp
 {
     using System;
     using System.Text.RegularExpressions;
+    using System.Windows.Forms;
 
     public class ComprobadorDePassword
     {
-        private string password;
-        //private bool _lowerCase;
-        //private bool _upperCase;
-        //private bool _numbers;
-        //private bool _length;
+        public const string ERROR_EMPTY_PASSWORD = "La contraseña no puede estar vacía";
+        public const string ERROR_SHORT_PASSWORD = "Contraseña demasiado corta";
 
         private const int MIN_LENGTH = 6;
         private const int SAFE_LENGTH = 12;
 
-        //public ComprobadorDePassword()
-        //{
-        //    _lowerCase = _upperCase = _numbers = _length = false;
-        //}
+        private string _password;
+       
 
-        public string Password { get => password; set => password = value; }
+        public string Password { 
+            get => _password; 
+            set
+            {
+                _password = value;
+
+                if (value == null || value.Length <= 0)
+                {
+                    throw new Exception(ERROR_EMPTY_PASSWORD);
+                }
+
+                else if (value.Length < MIN_LENGTH)
+                {
+                    throw new Exception(ERROR_SHORT_PASSWORD);
+                }
+            }
+        }
 
         /// <summary>
         /// <para>Metodo que comprueba si la contraseña es valida </para>
@@ -36,33 +48,12 @@ namespace ComprobadorDePasswordApp
         public int TestPassword(string password)
         {
             Password = password;
-
-            if (Password == null || Password.Length <= 0)
-            {
-                return -1; 
-            }
-
-            else if (Password.Length < MIN_LENGTH)
-            {
-                return 0; 
-            }
-
-            else
-            {
-                return CheckForce();
-            }
-        }
-
-        /// <summary>
-        /// Método que comprueba el nivel de fortaleza de la contraseña introducida
-        /// </summary>
-        /// <returns>El nivel de fortaleza de la contraseña de 1 (menos fuerte) a 4 (más fuerte)</returns>
-        private int CheckForce()
-        {
+       
             bool lowerCase = false;
             bool upperCase = false;
             bool numbers = false;
             bool length = false;
+            int force = 0;
 
             if (Password.Length > SAFE_LENGTH) length = true;
 
@@ -72,23 +63,16 @@ namespace ComprobadorDePasswordApp
                 {
                     lowerCase = true;
                 }
-            }
-            foreach (char c in Password)
-            {
                 if (char.IsUpper(c))
                 {
                     upperCase = true;
                 }
-            }
-            foreach (char c in Password)
-            {
                 if (char.IsDigit(c))
                 {
                     numbers = true;
                 }
             }
 
-            int force = 0;
             if (lowerCase) force++;
             if (upperCase) force++;
             if (numbers) force++;

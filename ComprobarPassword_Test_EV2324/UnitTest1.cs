@@ -18,21 +18,19 @@ namespace UnitTestProject_EV2324
         }
 
     [TestMethod]
-    public void TestMethod1()
+    [DataRow("")]
+    [DataRow(null)]
+    public void TestMethodError1(string password)
     {
-        string password = null;
-        int resultExpected = -1;
-        ComprobadorDePassword ComprobadorNull = new ComprobadorDePassword();
-        Assert.AreEqual(resultExpected, ComprobadorNull.TestPassword(password));
-    }
-
-    [TestMethod]
-    public void TestMethod2()
-    {
-        string password = "";
-        int resultExpected = -1;
-        ComprobadorDePassword ComprobadorEmpty = new ComprobadorDePassword();
-        Assert.AreEqual(resultExpected, ComprobadorEmpty.TestPassword(password));
+            ComprobadorDePassword ComprobadorNull = new ComprobadorDePassword();
+            try
+            {
+                ComprobadorNull.TestPassword(password);
+            }
+            catch (Exception error)
+            {
+                StringAssert.Contains(error.Message, ComprobadorNull.)
+            }
     }
 
     [TestMethod]
@@ -40,7 +38,7 @@ namespace UnitTestProject_EV2324
     [DataRow("abc")]
     [DataRow("A2c4e")]
 
-    public void TestMethod3(string password)
+    public void TestMethodError2(string password)
     {
         int resultExpected = 0;
         ComprobadorDePassword ComprobadorShort = new ComprobadorDePassword();
