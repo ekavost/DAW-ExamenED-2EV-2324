@@ -20,7 +20,6 @@ namespace ComprobadorDePasswordApp
 
         private string _password;
        
-
         public string Password { 
             get => _password; 
             set
@@ -40,7 +39,7 @@ namespace ComprobadorDePasswordApp
         }
 
         /// <summary>
-        /// <para>Metodo que comprueba si la contraseña es valida </para>
+        /// <para>Metodo que comprueba si la contraseña introducida es valida </para>
         /// <para>y define el nivel de su fortaleza</para>>
         /// </summary>
         /// <param name="password"> String con el valor de contraseña introducida</param>
